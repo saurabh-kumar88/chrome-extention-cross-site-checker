@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Compare Helper — Milestone 1",
+  "description": "Minimal extension: capture product details on e-commerce pages (client-side).",
+  "version": "0.1",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": [
+    "*://*.amazon.*/*",
+    "*://*.flipkart.com/*",
+    "*://*.myntra.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.amazon.in/*",
+        "*://*.amazon.com/*",
+        "*://*.flipkart.com/*",
+        "*://*.myntra.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": { "48": "icon48.png" }
+}
