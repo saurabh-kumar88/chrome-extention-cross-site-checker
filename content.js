@@ -1,57 +1,42 @@
-(function() {
-  if (window.__compare_helper_injected) return;
-  window.__compare_helper_injected = true;
+// content.js - minimal floating save button
+(function(){
+  if (window.__ch_minimal_injected) return;
+  window.__ch_minimal_injected = true;
 
-  const panel = document.createElement('div');
-  panel.id = 'ch-compare-panel';
-  Object.assign(panel.style, {
+  const btn = document.createElement('button');
+  btn.textContent = 'Save this product?';
+  Object.assign(btn.style, {
     position: 'fixed',
-    right: '16px',
-    top: '100px',
-    width: '300px',
-    background: 'white',
-    border: '1px solid rgba(0,0,0,0.15)',
-    boxShadow: '0 6px 18px rgba(0,0,0,0.12)',
+    right: '12px',
+    top: '12px',
     zIndex: 2147483647,
-    padding: '10px',
-    borderRadius: '8px',
-    fontFamily: 'Arial, sans-serif',
+    padding: '6px 8px',
+    borderRadius: '6px',
+    border: '1px solid #0b5fff',
+    background: '#0b5fff',
+    color: 'white',
+    cursor: 'pointer',
     fontSize: '13px'
   });
+  document.documentElement.appendChild(btn);
 
-  panel.innerHTML = `
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-      <strong>Save product</strong>
-      <button id="ch-close" title="Close" style="border:none;background:transparent;cursor:pointer;font-size:14px;">✕</button>
-    </div>
-    <label>Title</label>
-    <input id="ch-title" style="width:100%;padding:6px;margin-bottom:8px;border:1px solid #ddd;border-radius:4px;" />
-    <label>Target price (optional)</label>
-    <input id="ch-price" placeholder="e.g. 2999" style="width:100%;padding:6px;margin-bottom:8px;border:1px solid #ddd;border-radius:4px;" />
-    <label>Notes</label>
-    <textarea id="ch-notes" rows="3" style="width:100%;padding:6px;margin-bottom:8px;border:1px solid #ddd;border-radius:4px;"></textarea>
-    <button id="ch-save" style="padding:7px 10px;border-radius:6px;border:1px solid #0b5fff;background:#0b5fff;color:white;cursor:pointer;">Save</button>
-  `;
-
-  document.body.appendChild(panel);
-
-  document.getElementById('ch-close').addEventListener('click', () => panel.remove());
-
-  document.getElementById('ch-save').addEventListener('click', async () => {
-    const title = document.getElementById('ch-title').value.trim();
-    const price = document.getElementById('ch-price').value.trim();
-    const notes = document.getElementById('ch-notes').value.trim();
-
-    if (!title) {
-      alert('Please enter a product title');
-      return;
+  btn.addEventListener('click', async () => {
+    try {
+      const title = window.prompt('Enter product title to save', document.title || '');
+      if (!title) return;
+      const entry = { title: title.trim(), url: location.href, ts: Date.now() };
+      chrome.storage.local.get({ ch_saved: [] }, (res) => {
+        const list = res.ch_saved || [];
+        list.unshift(entry);
+        chrome.storage.local.set({ ch_saved: list.slice(0, 500) }, () => {
+          // brief visual feedback
+          btn.textContent = 'Saved ✓';
+          setTimeout(()=> btn.textContent = 'Save', 1200);
+        });
+      });
+    } catch (e) {
+      console.error('save failed', e);
+      alert('Save failed: ' + (e && e.message ? e.message : e));
     }
-
-    const entry = { title, price, notes, url: location.href, ts: Date.now() };
-    const prev = (await chrome.storage.local.get({ ch_saved: [] })).ch_saved;
-    prev.unshift(entry);
-    await chrome.storage.local.set({ ch_saved: prev.slice(0, 200) });
-
-    alert('Product saved!');
   });
 })();

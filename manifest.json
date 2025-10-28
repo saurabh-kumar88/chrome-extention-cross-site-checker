@@ -1,25 +1,43 @@
 {
   "manifest_version": 3,
-  "name": "Compare Helper — Milestone 1",
-  "description": "Minimal extension: capture product details on e-commerce pages (client-side).",
-  "version": "0.1",
+  "name": "Compare Helper — Milestone 2",
+  "description": "Capture product details on e-commerce pages and view them via popup.",
+  "version": "0.2",
   "permissions": ["storage", "activeTab"],
   "host_permissions": [
-    "*://*.amazon.*/*",
-    "*://*.flipkart.com/*",
-    "*://*.myntra.com/*"
+    "*://*.amazon.com/*",
+    "*://*.amazon.in/*",
+    "*://*.amazon.co.uk/*",
+    "*://*.amazon.de/*",
+    "*://*.amazon.ca/*",
+    "*://*.amazon.co.jp/*",
+    "*://*.amazon.com.au/*",
+    "https://www.flipkart.com/*",
+    "https://www.myntra.com/*"
   ],
   "content_scripts": [
     {
       "matches": [
-        "*://*.amazon.in/*",
         "*://*.amazon.com/*",
-        "*://*.flipkart.com/*",
-        "*://*.myntra.com/*"
+        "*://*.amazon.in/*",
+        "*://*.amazon.co.uk/*",
+        "*://*.amazon.de/*",
+        "*://*.amazon.ca/*",
+        "*://*.amazon.co.jp/*",
+        "*://*.amazon.com.au/*",
+        "https://www.flipkart.com/*",
+        "https://www.myntra.com/*"
       ],
       "js": ["content.js"],
       "run_at": "document_idle"
     }
   ],
+  "action": {
+    "default_title": "Compare Helper — Saved products",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "48": "icon48.png"
+    }
+  },
   "icons": { "48": "icon48.png" }
 }

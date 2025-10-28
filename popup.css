@@ -1,0 +1,113 @@
+:root {
+  --bg: #fff;
+  --muted: #6b7280;
+  --accent: #0b5fff;
+  --radius: 8px;
+  --gap: 8px;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  width: 360px;
+  margin: 0;
+  background: var(--bg);
+  color: #111827;
+  font-size: 13px;
+  padding: 10px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.header h3 {
+  margin: 0;
+  font-size: 15px;
+}
+
+#clear-all {
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.controls {
+  margin-top: 8px;
+  margin-bottom: 6px;
+}
+
+#search {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+}
+
+.list {
+  max-height: 340px;
+  overflow: auto;
+  padding-right: 6px;
+}
+
+.item {
+  border: 1px solid #eef2ff;
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: start;
+}
+
+.item .meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.item .meta a {
+  color: #0b5fff;
+  text-decoration: none;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item .meta small {
+  color: var(--muted);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.icon-btn {
+  border: none;
+  background: #f3f4f6;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 46px;
+  text-align: center;
+}
+
+.empty {
+  margin-top: 24px;
+  color: var(--muted);
+  display: none;
+  text-align: center;
+}
+.footer {
+  margin-top: 8px;
+  color: var(--muted);
+  text-align: center;
+}
